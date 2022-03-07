@@ -3,4 +3,6 @@
     <string name="title_currency_list">Currency List</string>
     <string name="msg_loading_currencies">Loading currency list...</string>
     <string name="msg_unknown_error">Unknown error</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_sort">Sort</string>
 </resources>

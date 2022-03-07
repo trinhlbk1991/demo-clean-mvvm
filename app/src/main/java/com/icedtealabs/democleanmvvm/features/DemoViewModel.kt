@@ -44,7 +44,10 @@ internal class DemoViewModel @Inject constructor(
     }
 
     private fun sortData() {
-        TODO("Not yet implemented")
+        val currentState = states.value ?: return
+        val newSort = if (currentState.sort == SortOrder.ASC) SortOrder.DESC else SortOrder.ASC
+
+        updateState { it.copy(sort = newSort) }
     }
 
 }

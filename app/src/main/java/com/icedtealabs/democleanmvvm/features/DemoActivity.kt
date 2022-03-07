@@ -4,6 +4,9 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.icedtealabs.democleanmvvm.R
 import com.icedtealabs.democleanmvvm.base.BaseActivity
@@ -25,6 +28,7 @@ class DemoActivity : BaseActivity() {
         binding = ActivityDemoBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
+        setupViews()
         setupObservers()
     }
 
@@ -33,9 +37,22 @@ class DemoActivity : BaseActivity() {
         viewModel.sendIntent(DemoIntent.Load())
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_demo, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_refresh -> viewModel.sendIntent(DemoIntent.Load(forceRefresh = true))
+            R.id.action_sort -> viewModel.sendIntent(DemoIntent.Sort)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun setupObservers() {
         viewModel.states.observeNotNull(this) { state ->
-            Log.i(TAG, "State: $state")
+            Toast.makeText(this, "State: $state", Toast.LENGTH_SHORT).show()
         }
 
         viewModel.events.observeNotNull(this) { event ->
@@ -56,6 +73,10 @@ class DemoActivity : BaseActivity() {
 
     private fun showProgress() {
         progressDialog = ProgressDialog.show(this, null, getString(R.string.msg_loading_currencies))
+    }
+
+    private fun setupViews() {
+        setSupportActionBar(binding.toolbar)
     }
 
     companion object {

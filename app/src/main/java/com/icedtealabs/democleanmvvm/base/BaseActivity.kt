@@ -16,9 +16,8 @@ abstract class BaseActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun currentFragmentTag(@IdRes container: Int): String? {
-        val currentFragment = supportFragmentManager.findFragmentById(container)
-        return currentFragment?.tag
+    protected fun currentFragment(@IdRes container: Int): Fragment? {
+        return supportFragmentManager.findFragmentById(container)
     }
 
     protected fun setFragment(
@@ -29,7 +28,7 @@ abstract class BaseActivity : AppCompatActivity() {
     ) {
         title = ""
 
-        if (tag == currentFragmentTag(container)) {
+        if (tag == currentFragment(container)?.tag) {
             return
         }
 

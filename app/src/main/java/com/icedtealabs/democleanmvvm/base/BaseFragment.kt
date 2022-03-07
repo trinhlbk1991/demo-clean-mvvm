@@ -3,7 +3,7 @@ package com.icedtealabs.democleanmvvm.base
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
-class BaseFragment : Fragment() {
+open class BaseFragment : Fragment() {
 
     protected fun showError(messageId: Int) {
         showError(getString(messageId))

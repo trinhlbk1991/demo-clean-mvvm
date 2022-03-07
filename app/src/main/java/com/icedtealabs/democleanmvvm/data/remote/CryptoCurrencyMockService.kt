@@ -18,7 +18,7 @@ internal class CryptoCurrencyMockService @Inject constructor(
     override fun getCurrencyInfoList(): Single<List<CurrencyInfoResponse>> {
         return Single.fromCallable {
             try {
-                Thread.sleep(3000) // Simulate network call
+                Thread.sleep(1000) // Simulate network call
 
                 val inputStream: InputStream = context.assets.open("data.json")
                 val size: Int = inputStream.available()

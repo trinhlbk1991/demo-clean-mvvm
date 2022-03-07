@@ -2,7 +2,6 @@ package com.icedtealabs.democleanmvvm.features
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -11,11 +10,12 @@ import androidx.activity.viewModels
 import com.icedtealabs.democleanmvvm.R
 import com.icedtealabs.democleanmvvm.base.BaseActivity
 import com.icedtealabs.democleanmvvm.databinding.ActivityDemoBinding
+import com.icedtealabs.democleanmvvm.models.CurrencyInfo
 import com.icedtealabs.democleanmvvm.utils.observeNotNull
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DemoActivity : BaseActivity() {
+class DemoActivity : BaseActivity(), CurrencyListFragment.Listener {
 
     private lateinit var binding: ActivityDemoBinding
     private val viewModel: DemoViewModel by viewModels()
@@ -50,9 +50,23 @@ class DemoActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onCurrencyItemClicked(currency: CurrencyInfo) {
+        Toast.makeText(this, "Clicked: ${currency.name}", Toast.LENGTH_SHORT).show()
+    }
+
     private fun setupObservers() {
         viewModel.states.observeNotNull(this) { state ->
-            Toast.makeText(this, "State: $state", Toast.LENGTH_SHORT).show()
+            val fragment = currentFragment(R.id.container)
+            if (fragment == null) {
+                setFragment(
+                    R.id.container,
+                    CurrencyListFragment.newInstance(state.currencies),
+                    CurrencyListFragment.TAG,
+                    addToBackStack = false
+                )
+            } else {
+                (fragment as? CurrencyListFragment)?.updateCurrencies(state.currencies)
+            }
         }
 
         viewModel.events.observeNotNull(this) { event ->

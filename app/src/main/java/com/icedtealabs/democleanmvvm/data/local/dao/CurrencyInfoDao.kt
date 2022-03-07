@@ -5,7 +5,7 @@ import androidx.room.Query
 import com.icedtealabs.democleanmvvm.data.local.entities.CurrencyInfoEntity
 
 @Dao
-interface CurrencyInfoDao : BaseDao<CurrencyInfoEntity> {
+internal interface CurrencyInfoDao : BaseDao<CurrencyInfoEntity> {
 
     @Query("SELECT * FROM currency_info")
     fun getAll(): List<CurrencyInfoEntity>

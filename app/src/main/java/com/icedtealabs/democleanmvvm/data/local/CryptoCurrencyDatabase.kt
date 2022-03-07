@@ -13,7 +13,7 @@ import com.icedtealabs.democleanmvvm.data.local.entities.CurrencyInfoEntity
     ],
     version = DB_VERSION
 )
-abstract class CryptoCurrencyDatabase : RoomDatabase() {
+internal abstract class CryptoCurrencyDatabase : RoomDatabase() {
 
     abstract fun currencyInfoDao(): CurrencyInfoDao
 

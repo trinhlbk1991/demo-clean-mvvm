@@ -27,10 +27,8 @@ fun <T> BaseDao<T>.upsert(entity: T) {
 }
 
 @Transaction
-fun <T> BaseDao<T>.upsert(vararg entities: T) {
+fun <T> BaseDao<T>.upsert(entities: List<T>) {
     entities.forEach { entity ->
-        if (insert(entity) == -1L) {
-            update(entity)
-        }
+        upsert(entity)
     }
 }

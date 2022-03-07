@@ -45,9 +45,15 @@ internal class DemoViewModel @Inject constructor(
 
     private fun sortData() {
         val currentState = states.value ?: return
-        val newSort = if (currentState.sort == SortOrder.ASC) SortOrder.DESC else SortOrder.ASC
-
-        updateState { it.copy(sort = newSort) }
+        val newSort = when (currentState.sort) {
+            SortOrder.ASC -> SortOrder.DESC
+            SortOrder.DESC -> SortOrder.ASC
+        }
+        val newList = when (newSort) {
+            SortOrder.ASC -> currentState.currencies.sortedBy { it.name }
+            SortOrder.DESC -> currentState.currencies.sortedByDescending { it.name }
+        }
+        updateState { it.copy(sort = newSort, currencies = newList) }
     }
 
 }

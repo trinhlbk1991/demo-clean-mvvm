@@ -8,6 +8,7 @@ import com.icedtealabs.democleanmvvm.data.remote.CryptoCurrencyService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -15,12 +16,12 @@ import dagger.hilt.components.SingletonComponent
 internal class DataModule {
 
     @Provides
-    fun bucketDao(context: Context): CurrencyInfoDao {
+    fun bucketDao(@ApplicationContext context: Context): CurrencyInfoDao {
         return CryptoCurrencyDatabase.getInstance(context).currencyInfoDao()
     }
 
     @Provides
-    fun cryptoCurrencyService(context: Context): CryptoCurrencyService {
+    fun cryptoCurrencyService(@ApplicationContext context: Context): CryptoCurrencyService {
         return CryptoCurrencyMockService(context)
     }
 

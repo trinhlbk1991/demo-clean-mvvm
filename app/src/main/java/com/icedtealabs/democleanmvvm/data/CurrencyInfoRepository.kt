@@ -8,7 +8,6 @@ import com.icedtealabs.democleanmvvm.data.mapper.toModel
 import com.icedtealabs.democleanmvvm.data.remote.CryptoCurrencyService
 import com.icedtealabs.democleanmvvm.models.CurrencyInfo
 import com.icedtealabs.democleanmvvm.utils.TimeProvider
-import com.icedtealabs.democleanmvvm.utils.then
 import io.reactivex.Single
 import javax.inject.Inject
 

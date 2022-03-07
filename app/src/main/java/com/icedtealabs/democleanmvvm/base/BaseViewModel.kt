@@ -29,7 +29,7 @@ abstract class BaseViewModel<I : Intent, S : State, E : Event> : ViewModel() {
     }
 
     fun sendIntent(intent: I) {
-        intents.value = intent
+        intents.postValue(intent)
     }
 
     protected abstract fun handleIntent(intent: I)
@@ -41,9 +41,16 @@ abstract class BaseViewModel<I : Intent, S : State, E : Event> : ViewModel() {
     }
 
     @UiThread
+    protected fun updateState(update: (currentState: S) -> S) {
+        val updatedState = update(states.value!!)
+        _states.postValue(updatedState)
+    }
+
+
+    @UiThread
     protected fun sendEvent(event: E) {
         Log.i(TAG, "Send event: $event")
-        _events.value = event
+        _events.postValue(event)
     }
 
     override fun onCleared() {

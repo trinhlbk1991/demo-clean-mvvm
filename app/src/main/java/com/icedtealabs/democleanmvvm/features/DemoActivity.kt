@@ -30,11 +30,10 @@ class DemoActivity : BaseActivity(), CurrencyListFragment.Listener {
 
         setupViews()
         setupObservers()
-    }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.sendIntent(DemoIntent.Load())
+        if (savedInstanceState == null) {
+            viewModel.sendIntent(DemoIntent.Load())
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

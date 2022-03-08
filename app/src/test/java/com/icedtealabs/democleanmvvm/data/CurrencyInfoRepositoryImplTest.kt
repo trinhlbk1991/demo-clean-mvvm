@@ -24,7 +24,7 @@ class CurrencyInfoRepositoryImplTest {
 
     @Before
     fun setUp() {
-        timeProvider.mockGetCurrentTime(100_000)
+        timeProvider.mockGetCurrentTime(10_000)
         currencyInfoService.mockGetCurrencyInfoList(generateCurrencyInfoResponse(size = 3))
         currencyInfoDao.mockGetAll(generateCurrencyInfoEntities(size = 4))
     }
@@ -47,6 +47,8 @@ class CurrencyInfoRepositoryImplTest {
 
     @Test
     fun `get all when exceed fetch interval should fetch from api`() {
+        timeProvider.mockGetCurrentTime(300_000)
+
         repository.getAll(forceFetchRemote = false)
             .test()
             .assertValue { actual -> actual.size == 3 }

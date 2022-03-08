@@ -27,7 +27,7 @@ internal class CurrencyInfoRepositoryImpl @Inject constructor(
     override fun getAll(forceFetchRemote: Boolean): Single<List<CurrencyInfo>> {
         return Single.fromCallable { currencyInfoDao.getAll() }
             .flatMap { localEntities ->
-                if (localEntities.isEmpty() || exceedFetchInterval()) {
+                if (localEntities.isEmpty() || forceFetchRemote || exceedFetchInterval()) {
                     fetchCurrencyInfoList()
                 } else {
                     Single.just(localEntities.map { it.toModel() })
